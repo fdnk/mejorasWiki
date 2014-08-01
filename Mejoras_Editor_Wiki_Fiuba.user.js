@@ -3,10 +3,18 @@
 // @namespace   http://localhost
 // @description Importación automatica de templates, asistente de links a páginas nuevas
 // @include     http://wiki.foros-fiuba.com.ar/*
-// @version     0.2
+// @version     0.201
 // @grant       GM_addStyle
 // @require     nombres_materias.js
 // ==/UserScript==
+
+// Modo de depuración
+DEBUGMODE = False;
+//////////
+
+var addLog = function(str){
+	return DEBUGMODE?console.log(str):0;
+}
 
 var parseDate = function(str){
 	myRegex = /(\d+)\/(\d+)\/(\d+)/ig;
@@ -51,7 +59,7 @@ var printFecha = function(date){
 }
 
 var printCardinal = function(x){
-console.log("printCardinal: "+x);
+addLog("printCardinal: "+x);
 	// Devuelve un string con "primera", "segunda", etc en lugar de 1, 2, etc.
 	x=parseInt(x);
 	
@@ -91,7 +99,7 @@ var getPeriodo = function(data){
 
 
 var printTemplate = function(data){
-console.log("printTemplate");
+addLog("printTemplate");
 	//Reemplaza los campos del template con la información de data
 	var template = "====== Examen TIPO_EXAMEN - CODIGO_MATERIA. NOMBRE_MATERIA - FECHA ======\n\n**Cátedra:** CATEDRA\\\\ \n**Fecha:** NRO_OPORTUNIDAD Oportunidad - PERIODO AÑO\\\\ \n**Día:** FECHA\n\n<note important>\nEsta página está incompleta; podés ayudar completando el material.\n</note>\n\n===== Enunciado =====\n\n<!-- ==== Punto I ==== ... -->\n\n===== Resolución =====\n\n<!-- ==== Punto I ==== ... -->\n\n===== Discusión =====\n\n<note warning>\nSi ves algo que te parece incorrecto en la resolución y no te animás a cambiarlo, dejá tu comentario acá.\n</note>"
 	
@@ -123,7 +131,7 @@ var isEditPage = function(){
 }
 
 var addCSS = function() {
-	console.log("Entrando a función addCSS()");
+	addLog("Entrando a función addCSS()");
 	
 	GM_addStyle('\
 .myWindow label{\
@@ -200,7 +208,7 @@ var addCSS = function() {
 }\
 	');
 	
-	console.log("Saliendo de función addCSS()");
+	addLog("Saliendo de función addCSS()");
 }
 
 var templateWiz = {
@@ -208,7 +216,7 @@ var templateWiz = {
 };
 
 templateWiz.injectTemplateForm = function(){
-	console.log("Entrando a función injectTemplateForm()");
+	addLog("Entrando a función injectTemplateForm()");
 
 	var my_div = document.createElement('div');
 	my_div.innerHTML = '\
@@ -275,7 +283,7 @@ templateWiz.injectTemplateForm = function(){
 	document.getElementById('templateWiz_submit').addEventListener('click', templateWiz.submit, false);
 	document.getElementById('templateWiz_cancel').addEventListener('click', templateWiz.close, false);
 	
-	console.log("Saliendo de función injectTemplateForm()");
+	addLog("Saliendo de función injectTemplateForm()");
 	return my_div;
 }
 
@@ -285,7 +293,7 @@ templateWiz.refreshDisplay = function(){
 
 templateWiz.close = function(){
 	document.getElementById("templateWiz_fondo").style.display="none";
-	console.log("cerrado");
+	addLog("cerrado");
 }
 
 templateWiz.open = function(){
@@ -329,7 +337,7 @@ templateWiz.start = function(){
 }
 
 templateWiz.submit = function(){
-	console.log("submit");
+	addLog("submit");
 	//Acá pasa todo
 	
 	var $ = function(str){
@@ -351,11 +359,11 @@ templateWiz.submit = function(){
 	templateWiz.data.nombreMateria=$("templateWiz_nombreMateria").value;
 	templateWiz.data.catedra=$("templateWiz_catedra").value;
 	
-	console.log(printTemplate(templateWiz.data));
+	addLog(printTemplate(templateWiz.data));
 	
 	//Imprimimos
 	$("wiki__text").value = printTemplate(templateWiz.data) + "\n" + $("wiki__text").value;
-	console.log("Teminamos de imprimir");
+	addLog("Teminamos de imprimir");
 	
 	//Salimos
 	templateWiz.close();
@@ -363,13 +371,12 @@ templateWiz.submit = function(){
 
 /////////////////////////////////////////////////////
 main = function(){
-	alert('hola');
-	console.log("main() Mejoras_Editor_Wiki_Fiuba");
+	addLog("main() Mejoras_Editor_Wiki_Fiuba");
 	
 	if(!isEditPage())
 		return; // :(
 	
-	console.log("Es una página de edición");
+	addLog("Es una página de edición");
 	//Agrego estilos CSS
 	addCSS();
 	
@@ -391,4 +398,4 @@ main = function(){
 }
 
 window.addEventListener('load', main);
-console.log("Script Wiki corriendo");
+addLog("Script Wiki corriendo");
