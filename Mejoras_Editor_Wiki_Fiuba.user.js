@@ -3,13 +3,13 @@
 // @namespace   http://localhost
 // @description Importación automatica de templates, asistente de links a páginas nuevas
 // @include     http://wiki.foros-fiuba.com.ar/*
-// @version     0.201
+// @version     0.202
 // @grant       GM_addStyle
 // @require     nombres_materias.js
 // ==/UserScript==
 
 // Modo de depuración
-DEBUGMODE = False;
+DEBUGMODE = false;
 //////////
 
 var addLog = function(str){
