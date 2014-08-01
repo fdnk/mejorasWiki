@@ -3,7 +3,7 @@
 // @namespace   http://localhost
 // @description Importación automatica de templates, asistente de links a páginas nuevas
 // @include     http://wiki.foros-fiuba.com.ar/*
-// @version     0.202
+// @version     0.21
 // @grant       GM_addStyle
 // @require     nombres_materias.js
 // ==/UserScript==
@@ -288,7 +288,8 @@ templateWiz.injectTemplateForm = function(){
 }
 
 templateWiz.refreshDisplay = function(){
-	document.getElementById('templateWiz_examen2Container').style.display=(document.getElementById("templateWiz_examen").value==0)?'block':'none';
+	document.getElementById('templateWiz_examen2Container').style.display=(+document.getElementById("templateWiz_examen").value==0)?'block':'none';
+	document.getElementById('templateWiz_examen2').value="**Especifique**";
 }
 
 templateWiz.close = function(){
@@ -345,11 +346,11 @@ templateWiz.submit = function(){
 	}
 	
 	//Recuperamos los valores que el usuario ingresó
-	if( $("templateWiz_examen").value === 0){
+	if( +$("templateWiz_examen").value == 0){
 		templateWiz.data.tipoExamen=$("templateWiz_examen2").value;
 	}else{
 		var tipos_examen = ["final","parcial","parcialito"];
-		templateWiz.data.tipoExamen=tipos_examen[$("templateWiz_examen").value-1];
+		templateWiz.data.tipoExamen=tipos_examen[+$("templateWiz_examen").value-1];
 	}
 	
 	templateWiz.data.fecha = parseDate($("templateWiz_fecha").value);
