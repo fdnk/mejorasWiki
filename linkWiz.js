@@ -42,6 +42,9 @@ linkWiz.injectLinkForm = function(){
           <label for="linkWiz_codigo">Código</label> \
           <input type="text" name="linkWiz_codigo" id="linkWiz_codigo" value="XX.XX" /></div>\
         </fieldset>\
+		<div class="formPair">\
+          <label for="linkWiz_open">Abrir link</label> \
+          <input type="checkbox" name="linkWiz_open" id="linkWiz_open" checked/></div>\
         <input type="button" class="button" value="Insertar Link" id="linkWiz_submit" /> \
 		<input type="button" class="button" value="Cancelar" id="linkWiz_cancel" /> \
       </div>\
@@ -78,6 +81,7 @@ linkWiz.close = function(){
 linkWiz.open = function(){
 	document.getElementById("linkWiz_fecha").value="dd/mm/aaaa";
 	document.getElementById("linkWiz_fondo").style.display="block";
+	document.getElementById("linkWiz_fecha").focus();
 }
 
 linkWiz.start = function(){
@@ -119,7 +123,7 @@ linkWiz.submit = function(){
 	var tipos_examen = ["Final","Parcial","Parcialito"];
 	
 	if( +$("linkWiz_examen").value == 0){
-		linkWiz.data.tipoExamen=$("linkWiz_examen2");
+		linkWiz.data.tipoExamen=$("linkWiz_examen2").value;
 	}else{
 		linkWiz.data.tipoExamen=tipos_examen[+$("linkWiz_examen").value-1];
 	}
@@ -132,7 +136,19 @@ linkWiz.submit = function(){
 	
 	var date = linkWiz.data.fecha;
 	var fecha_str = ""+date.getFullYear() + "" + ((date.getMonth()+1)<10?"0":"")+String(date.getMonth()+1) + "" +(date.getDate()<10?"0":"") + date.getDate();
-	var text="[[.:"+linkWiz.data.tipoExamen.toLowerCase()+"_"+fecha_str+"_"+linkWiz.data.tema+"|"+linkWiz.data.tipoExamen+" del "+printFecha(linkWiz.data.fecha)+", Tema "+linkWiz.data.tema+"]]";
+	
+	var myRegEx_codigo = /(\d+).(\d+)/ig;
+	var match = myRegEx_codigo.exec(linkWiz.data.codigoMateria);
+	if(match){
+		var numero_materia = match[2];
+	}else{
+		linkWiz.close();
+		alert('Error');
+		return 0;
+	}
+	console.log(numero_materia);
+	
+	var text="[[."+numero_materia+":"+linkWiz.data.tipoExamen.toLowerCase()+"_"+fecha_str+"_"+linkWiz.data.tema+"|"+linkWiz.data.tipoExamen+" del "+printFecha(linkWiz.data.fecha)+", Tema "+linkWiz.data.tema+"]]";
 	console.log(text);
 	//Imprimimos
 	unsafeWindow.pasteText(unsafeWindow.getSelection($("wiki__text")), text, 0);
@@ -141,4 +157,6 @@ linkWiz.submit = function(){
 	
 	//Salimos
 	linkWiz.close();
+	if($("linkWiz_open").checked)
+		GM_openInTab(document.URL+":"+linkWiz.data.tipoExamen.toLowerCase()+"_"+fecha_str+"_"+linkWiz.data.tema);
 }

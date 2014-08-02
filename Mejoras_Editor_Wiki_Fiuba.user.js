@@ -3,8 +3,9 @@
 // @namespace   http://localhost
 // @description Importación automatica de templates, asistente de links a páginas nuevas
 // @include     http://wiki.foros-fiuba.com.ar/*
-// @version     0.301
+// @version     0.31
 // @grant       GM_addStyle
+// @grant       GM_openInTab
 // @require     nombres_materias.js
 // @require     addCSS.js
 // @require     templateWiz.js
