@@ -12,7 +12,7 @@ templateWiz.injectTemplateForm = function(){
    <div id="templateWiz" class="dokuwiki picker myWindow" style="top: 113px; left: 275px; margin-left: 0px; margin-top: 0px; position: absolute; width: auto; height:auto; z-index:9999999">\
       <div class="myWindow_header" id="templateWiz_header">\
         <img src="/lib/images/close.png" alt="" class="myWindow_close" id="templateWiz_close" height="16" align="right" width="16"/>\
-		Insertar Link a Nuevo Exámen\
+		Insertar plantilla de Exámen\
 	  </div>\
       <div id="templateWiz_addTemplateDiv" class="myWindow_content">\
         <form id="templateWiz_addTemplateForm" method="post" action="">\

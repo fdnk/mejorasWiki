@@ -12,7 +12,7 @@ linkWiz.injectLinkForm = function(){
    <div id="linkWiz" class="dokuwiki picker myWindow" style="top: 113px; left: 275px; margin-left: 0px; margin-top: 0px; position: absolute; width: auto; height:auto; z-index:9999999">\
       <div class="myWindow_header" id="linkWiz_header">\
         <img src="/lib/images/close.png" alt="" class="myWindow_close" id="linkWiz_close" height="16" align="right" width="16"/>\
-		Insertar plantilla de examen\
+		Insertar link a nuevo Exámen\
 	  </div>\
       <div id="linkWiz_addTemplateDiv" class="myWindow_content">\
         <form id="linkWiz_addTemplateForm" method="post" action="">\
