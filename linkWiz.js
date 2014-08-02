@@ -158,5 +158,5 @@ linkWiz.submit = function(){
 	//Salimos
 	linkWiz.close();
 	if($("linkWiz_open").checked)
-		GM_openInTab(document.URL+":"+linkWiz.data.tipoExamen.toLowerCase()+"_"+fecha_str+"_"+linkWiz.data.tema);
+		GM_openInTab(document.URL+":"+linkWiz.data.tipoExamen.toLowerCase()+"_"+fecha_str+"_"+linkWiz.data.tema+"?autocreate=1");
 }

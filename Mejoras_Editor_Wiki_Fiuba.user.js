@@ -3,7 +3,7 @@
 // @namespace   http://localhost
 // @description Importación automatica de templates, asistente de links a páginas nuevas
 // @include     http://wiki.foros-fiuba.com.ar/*
-// @version     1.0
+// @version     1.1
 // @grant       GM_addStyle
 // @grant       GM_openInTab
 // @require     nombres_materias.js
@@ -154,15 +154,26 @@ var isEditPage = function(){
     return Boolean(document.getElementById("tool__bar"));
 }
 
-
-
+var isNewPage = function(){
+	// Verifica si es una pagina que no existe aún
+	return Boolean(document.getElementById("este_tema_no_existe_todavia"));
+}
 
 /////////////////////////////////////////////////////
 main = function(){
 	addLog("main() Mejoras_Editor_Wiki_Fiuba");
 	
-	if(!isEditPage())
-		return; // :(
+	if(!isEditPage()){
+		if (isNewPage()){
+			//Veamos si tengo que auto-crearla
+			if(document.URL.indexOf("autocreate=1")==-1)
+				return; //:(
+			
+			//Sí, tengo que crear la página
+			if(document.getElementsByClassName("button btn_create")[0])
+				document.getElementsByClassName("button btn_create")[0].submit();
+		}
+	}
 	
 	addLog("Es una página de edición");
 	//Agrego estilos CSS
