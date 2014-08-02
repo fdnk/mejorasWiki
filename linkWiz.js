@@ -108,7 +108,7 @@ linkWiz.start = function(){
 }
 
 linkWiz.submit = function(){
-	addLog("submit");
+	addLog("submit lnkWiz");
 	//Acá pasa todo
 	
 	var $ = function(str){
@@ -119,25 +119,24 @@ linkWiz.submit = function(){
 	var tipos_examen = ["Final","Parcial","Parcialito"];
 	
 	if( +$("linkWiz_examen").value == 0){
-		linkWiz.data.tipoExamen=$("linkWiz_examen2").value.toLowerCase();
+		linkWiz.data.tipoExamen=$("linkWiz_examen2");
 	}else{
-		linkWiz.data.tipoExamen=tipos_examen[+$("linkWiz_examen").value-1].toLowerCase();
+		linkWiz.data.tipoExamen=tipos_examen[+$("linkWiz_examen").value-1];
 	}
 	
 	linkWiz.data.fecha = parseDate($("linkWiz_fecha").value);
 	linkWiz.data.codigoMateria=$("linkWiz_codigo").value;
 	
 	//Parseo el tema
-	var tema = $("linkWiz_tema").value;
-	if( isNaN(parseInt(tema)) || parseInt(tema)<0)
-		linkWiz.data.tema = 1;
+	linkWiz.data.tema = ($("linkWiz_tema").value==="")?"1":$("linkWiz_tema").value;
 	
-	addLog(printTemplate(linkWiz.data));
-	var fecha_str = ""+linkWiz.data.fecha.getFullYear()+""+(linkWiz.data.fecha.getMonth()+1)+""+linkWiz.data.fecha.getDay();
-	
-	var text="[[.:"+linkWiz.data.tipoExamen.toLowerCase()+"_"+fecha_str+"_"+linkWiz.data.tema+"|"+linkWiz.data.tipoExamen+", "+printFecha(linkWiz.data.fecha)+"]]";
+	var date = linkWiz.data.fecha;
+	var fecha_str = ""+date.getFullYear() + "" + ((date.getMonth()+1)<10?"0":"")+String(date.getMonth()+1) + "" +(date.getDate()<10?"0":"") + date.getDate();
+	var text="[[.:"+linkWiz.data.tipoExamen.toLowerCase()+"_"+fecha_str+"_"+linkWiz.data.tema+"|"+linkWiz.data.tipoExamen+" del "+printFecha(linkWiz.data.fecha)+", Tema "+linkWiz.data.tema+"]]";
+	console.log(text);
 	//Imprimimos
-	pasteText(getSelection($("wiki__text")), text, 0)
+	unsafeWindow.pasteText(unsafeWindow.getSelection($("wiki__text")), text, 0);
+	
 	addLog("Teminamos de imprimir");
 	
 	//Salimos

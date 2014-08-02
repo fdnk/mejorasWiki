@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 // Modo de depuración
-DEBUGMODE = false;
+DEBUGMODE = true;
 //////////
 
 var addLog = function(str){
@@ -23,7 +23,10 @@ var parseDate = function(str){
 	myRegex = /(\d+)\/(\d+)\/(\d+)/ig;
 	matches = myRegex.exec(str);
 	
-	return new Date(matches[3], matches[2]-1, matches[1]);
+	if (matches)
+		return new Date(matches[3], matches[2]-1, matches[1]);
+	else
+		return new Date();
 }
 
 var getUrlData = function(){
@@ -168,7 +171,7 @@ main = function(){
     var my_btn = document.createElement("input"); //usar button, clase toolbutton y una imagen en lugar de texto
 	my_btn.type="button";
 	my_btn.className="button";
-    my_btn.onclick = function (){alert ('Soon, my dear :)')};//newPageWiz.open;
+    my_btn.onclick = linkWiz.start;//newPageWiz.open;
     my_btn.value="Link a página nueva";
     document.getElementById("tool__bar").appendChild(my_btn);
 	
